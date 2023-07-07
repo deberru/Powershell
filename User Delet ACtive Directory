@@ -1,0 +1,5 @@
+dsrm user "CN=John, OU=Musteri, DC=fabrikam, DC=contoso, DC=net"
+
+
+
+dsrm user "CN=KEMAL MELER, OU=Kontrol,OU=OU_User, DC=mikanetwork, DC=com"
