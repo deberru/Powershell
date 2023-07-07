@@ -1,0 +1,1 @@
+Rename-Computer -ComputerName eskihost -NewName yenihost -Restart -DomainCredential domainname\yetkilikullanıcı
