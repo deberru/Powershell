@@ -1,0 +1,31 @@
+Import-Module activedirectory
+
+# Parametreler girilir.
+$domain = "mikanetwork.com"
+$DaysInactive = 180
+$time = (Get-Date).Adddays(-($DaysInactive))
+$date = Get-Date ($time) -UFormat %d.%m.%y
+$File = "c:\Scripts\Inactive_Computers\Inactive_Computers.csv"
+
+# Son 180 günde oturum açılmamış bilgisayarları $file yolundaki dosyaya listeler
+$CompList = Get-ADComputer -Filter {LastLogonTimeStamp -lt $time -and operatingSystem -notlike "*server*"} -SearchBase "DC=emres, DC=com" -Properties Name,LastLogonTimeStamp,OperatingSystem | 
+Select-Object Name, OperatingSystem, @{Name="Last Logon TimeStamp"; Expression={[DateTime]::FromFileTime($_.lastLogonTimestamp)}} | Export-Csv $File -encoding UTF8 -notypeinformation
+
+# Son 180 günde oturum açılmamış bilgisayarların isimlerini toplar
+$Computers = Get-ADComputer -Filter {LastLogonTimeStamp -lt $time -and operatingSystem -notlike "*server*"} -SearchBase "DC=emres, DC=com" -Properties Name,LastLogonTimeStamp,OperatingSystem |
+Select-Object -ExpandProperty Name
+
+
+Import-Module activedirectory
+
+$domain = "mikanetwork.com"
+$DaysInactive = 180
+$time = (Get-Date).Adddays(-($DaysInactive))
+$date = Get-Date ($time) -UFormat %d.%m.%y
+$File = "c:\Scripts\Inactive_Computers.csv"
+
+$CompList = Get-ADComputer -Filter {LastLogonTimeStamp -lt $time -and operatingSystem -notlike "*server*"} -SearchBase "DC=mikanetwork, DC=com" -Properties Name,LastLogonTimeStamp,OperatingSystem | 
+Select-Object Name, OperatingSystem, @{Name="Last Logon TimeStamp"; Expression={[DateTime]::FromFileTime($_.lastLogonTimestamp)}} | Export-Csv $File -encoding UTF8 -notypeinformation
+
+$Computers = Get-ADComputer -Filter {LastLogonTimeStamp -lt $time -and operatingSystem -notlike "*server*"} -SearchBase "DC=mikanetwork, DC=com" -Properties Name,LastLogonTimeStamp,OperatingSystem |
+Select-Object -ExpandProperty Name
