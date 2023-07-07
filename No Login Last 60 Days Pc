@@ -1,0 +1,40 @@
+Get-ADComputer -Filter {Enabled -eq $TRUE} -Properties Name,SamAccountName,LastLogonDate,Department | Where {($_.LastLogonDate -lt (Get-Date).AddDays(-60)) -and ($_.LastLogonDate -ne $NULL)} | Sort | Select Name,SamAccountName,LastLogonDate,Department| Export-CSV -path C:\Scripts\PcLastLogon60Day.csv
+
+# Define the sender, recipient, subject, and body of the email
+
+$From = "*@*.com"
+$To = "*@*.com"
+$Subject = "Last Login 60 Days"
+$Body = "Listede iletilen PCler 60 gündür oturum açmıyor"
+$attachment = "C:\Scripts\PcLastLogon60Day.csv"
+$attach = New-Object Net.Mail.Attachment($attachment)
+ 
+# Define the SMTP server details
+
+$SMTPServer = "*************"
+$SMTPPort = 587
+$SMTPUsername = "*************"
+$SMTPPassword = "*************"
+ 
+# Create a new email object
+
+$Email = New-Object System.Net.Mail.MailMessage
+$Email.From = $From
+$Email.To.Add($To)
+$Email.Subject = $Subject
+$Email.Body = $Body
+$Email.Attachments.Add($attach)
+
+
+# Uncomment below to send HTML formatted email
+
+#$Email.IsBodyHTML = $true
+ 
+# Create an SMTP client object and send the email
+
+
+$SMTPClient = New-Object System.Net.Mail.SmtpClient($SMTPServer, $SMTPPort)
+$SMTPClient.EnableSsl = $true
+ 
+$SMTPClient.Credentials = New-Object System.Net.NetworkCredential($SMTPUsername, $SMTPPassword)
+$SMTPClient.Send($Email)
