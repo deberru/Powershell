@@ -1,4 +1,4 @@
-Get-ADComputer -Filter "Name -like 'UCK-*'" -SearchBase "CN=Computers,DC=mikanetwork,DC=com" | Move-ADObject -TargetPath "OU=Ucak Bilet Dept,OU=DC2 Genel Mudurluk,OU=CLIENT,OU=TATILBUDUR,DC=mikanetwork,DC=com"
+Get-ADComputer -Filter "Name -like 'UCK-*'" -SearchBase "CN=Computers,DC=mikanetwork,DC=com" | Move-ADObject -TargetPath "OU=******,OU=******,OU=******,OU=******,DC=******,DC=com"
 
 
 
@@ -8,4 +8,4 @@ Search-ADAccount -AccountDisabled | where {$_.ObjectClass -eq ‘user’} | FT N
 
 /*Disabe Userları bulup, Oluşturduğumuz  Disable Grubuna Taşıyan kod
 
-Search-ADAccount -AccountDisabled -SearchBase "DC=mikanetwork,DC=com" | Move-ADObject -TargetPath "OU=Disable User,OU=USER,OU=TATILBUDUR,DC=mikanetwork,DC=com"
+Search-ADAccount -AccountDisabled -SearchBase "DC=******,DC=com" | Move-ADObject -TargetPath "OU=Disable User,OU=USER,OU=******,DC=******,DC=com"
