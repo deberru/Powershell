@@ -1,0 +1,6 @@
+
+*Kullanıcı adları ile Kullanıcıların giriş adlarını gösteren 
+*Ve bunları Türkçe Karatere uygun çıktısını alan komut
+
+
+get-aduser -filter * -Properties * | select displayname, city, SamAccountName, department, EmailAddress, telephonenumber | export-csv -path "C:\Scripts\username.csv"-Encoding UTF8
